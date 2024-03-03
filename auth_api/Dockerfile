@@ -1,11 +1,9 @@
-FROM golang:1.16
-
+FROM golang
 WORKDIR /app
-
-COPY . .
-
+COPY go.mod .
+COPY go.sum .
 RUN go mod download
-
+COPY . .
 RUN go build -o /godocker
 
 EXPOSE 8080
