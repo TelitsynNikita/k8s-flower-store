@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-flowers-api-deploy
+spec:
+  selector:
+    matchLabels:
+      app: catalog-flowers-api-deploy
+  template:
+    metadata:
+      labels:
+        app: catalog-flowers-api-deploy
+    spec:
+      containers:
+      - name: catalog-flowers-api-deploy
+        image: telitsynnikita/k8s-flower-store_catalog_flowers_api:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-flowers-api-deploy
+spec:
+  type: LoadBalancer
+  selector:
+    app: catalog-flowers-api-deploy
+  ports:
+  - port: 8888
+    targetPort: 8080
